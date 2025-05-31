@@ -1,0 +1,29 @@
+@model List<TaskTracker.Models.TaskItem>
+
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="mb-0">Tasks</h2>
+        <a href="/Task/Create" class="btn btn-primary">Add Task</a>
+    </div>
+    <ul class="list-group">
+        @foreach (var task in Model)
+        {
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <div>
+                    <span class="fw-semibold">@task.Description</span>
+                    <span class="badge rounded-pill ms-2 @(task.IsCompleted ? "bg-success" : "bg-warning text-dark")">
+                        @(task.IsCompleted ? "Done" : "Pending")
+                    </span>
+                </div>
+                <div>
+                    @if (!task.IsCompleted)
+                    {
+                        <a href="/Task/Complete/@task.Id" class="btn btn-success btn-sm me-2">Complete</a>
+                    }
+                    <a href="/Task/Edit/@task.Id" class="btn btn-outline-secondary btn-sm me-2">Edit</a>
+                    <a href="/Task/Delete/@task.Id" class="btn btn-outline-danger btn-sm" onclick="return confirm('Are you sure?');">Delete</a>
+                </div>
+            </li>
+        }
+    </ul>
+</div>
